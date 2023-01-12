@@ -1,5 +1,6 @@
 ﻿using ConsoleApp1;
 using ExcelDataReader;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -62,9 +63,43 @@ using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
 
     }
 
+    Console.WriteLine("Введите год или диапазон годов через дефис:");
+    var zapros = Console.ReadLine();
+
+    int yearBegin = 0;
+    int yearEnd = 0;
+    int zaprosNum = 0;
+
+    if (zapros.Contains("-"))
+    {
+        var zaprosSplitted = zapros.Split('-');
+        yearBegin = Convert.ToInt32(zaprosSplitted[0]);
+        yearEnd = Convert.ToInt32(zaprosSplitted[1]);
+    }
+    else
+    {
+        zaprosNum = Convert.ToInt32(zapros);
+    }
+
+    
+
     foreach (Language i in languages)
     {
-        Console.WriteLine("В {0}-том году придуман язык {1} \nА его автор {2}\n", i.Year, i.Name, i.Author);
+        if ((yearBegin != 0) & (i.Year > yearBegin - 1) & (i.Year < yearEnd + 1))
+        {
+            Console.WriteLine("В {0}-том году придуман язык {1} \nА его автор {2}\n", i.Year, i.Name, i.Author);
+        }
+        else if (zaprosNum == i.Year)
+        {
+            Console.WriteLine("В {0}-том году придуман язык {1} \nА его автор {2}\n", i.Year, i.Name, i.Author);
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Что-то пошло не так...");
+        }
+
     }
+
 
 }
