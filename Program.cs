@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-string filePath = @"D:\Projects\acm.timus_artemiy_lessons\2023\from-table-to-oop-cs\ConsoleApp1\original-table.xlsx";
+string filePath = @"sourse\original-table.xlsx";
 
 using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
 {
@@ -81,21 +81,21 @@ using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
         zaprosNum = Convert.ToInt32(zapros);
     }
 
-    
-
     foreach (Language i in languages)
     {
-        if ((yearBegin != 0) & (i.Year > yearBegin - 1) & (i.Year < yearEnd + 1))
+        if (yearBegin != 0)
         {
+            if ((i.Year > yearBegin - 1) && (i.Year < yearEnd + 1))
             Console.WriteLine("В {0}-том году придуман язык {1} \nА его автор {2}\n", i.Year, i.Name, i.Author);
         }
-        else if (zaprosNum == i.Year)
+        else if (zaprosNum != 0)
         {
+            if (i.Year == zaprosNum)
             Console.WriteLine("В {0}-том году придуман язык {1} \nА его автор {2}\n", i.Year, i.Name, i.Author);
-            return;
         }
         else
         {
+            if (yearBegin == 0 && zaprosNum == 0)
             Console.WriteLine("Что-то пошло не так...");
         }
 
